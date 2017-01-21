@@ -18,7 +18,7 @@
 		
 	<div class="row">
 		<div class="col-lg-6 col-md-offset-3">
-			<div class="panel panel-default">
+			<div class="panel panel-primary">
 				<div class="panel-heading">Update Data Aplikasi</div>
 				<div class="panel-body">
 					<form action="{{ url('/admin/setting') }}" method="post" enctype="multipart/form-data">

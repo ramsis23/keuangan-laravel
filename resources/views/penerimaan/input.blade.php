@@ -8,6 +8,10 @@
 @endsection
 
 @section('content')
+<?php
+use App\KodeRekening;
+use App\ItemPembayaran;
+?>
 	<div class="row">
 		<ol class="breadcrumb">
 			<li><a href="{{ url(Auth::user()->roleData->prefix.'/home') }}"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
@@ -22,7 +26,7 @@
 	</div><!--/.row-->
 		
 	<div class="row">
-		<div class="col-lg-6 col-md-offset-3">
+		<div class="col-lg-8 col-md-offset-2">
 			<div class="panel panel-default">
 				<div class="panel-heading">Form Input Penerimaan</div>
 				<div class="panel-body">
@@ -100,12 +104,11 @@
 						<div class="row">
 							<div class="col-md-6">
 								<?php
-								use App\KodeRekening;
-								$kode_rek = KodeRekening::where('id_rekening','like','4.%')->get();
+								$kode_rek = ItemPembayaran::where('paket',1)->get();
 								?>
 								<select class="selectpicker" data-live-search="true" id="kode_rekening" name="kode_rek" required>
 									@foreach($kode_rek as $r)
-									<option value="{{ $r->id_rekening }}">{{ $r->nama_rekening }}</option>
+									<option value="{{ $r->rekening }}">{{ $r->rekening }} - {{ $r->dataRekening->nama_rekening }}</option>
 									@endforeach
 								</select>
 							</div>

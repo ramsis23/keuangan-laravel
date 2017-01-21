@@ -18,10 +18,10 @@
 		
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="panel panel-default">
+			<div class="panel panel-primary">
 				<div class="panel-heading">
 				Daftar Kode Rekening
-				<p class="navbar-text navbar-right">Tambah Rekening <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalRekening"><i class="glyphicon glyphicon-plus"></i></a></p>
+				<p class="navbar-text navbar-right" style="color:#fff;">Tambah Rekening <a href="#" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalRekening"><i class="glyphicon glyphicon-plus"></i></a></p>
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped">

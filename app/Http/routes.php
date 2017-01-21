@@ -45,6 +45,10 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::post('/rekening/add', 'AdminCtr@rekening_add');
 		Route::post('/rekening/edit', 'AdminCtr@rekening_edit');
 		Route::get('/rekening/remove/{id}', 'AdminCtr@rekening_remove');
+		Route::get('/paket', 'AdminCtr@paket');
+		Route::post('/paket', 'AdminCtr@paket_baru');
+		Route::get('/paket/item/{id}', 'AdminCtr@paket_item');
+		Route::post('/paket/item', 'AdminCtr@paket_item_new');
 	});
 	
 });

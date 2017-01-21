@@ -9,6 +9,8 @@ use App\KodeRekening;
 use App\SiteConfig;
 use App\TandaTangan;
 use App\JurnalPenerimaan;
+use App\PaketPembayaran;
+use App\ItemPembayaran;
 use Auth;
 use DB;
 use Validator;
@@ -142,6 +144,50 @@ class AdminCtr extends Controller
 			return back()->with('error','Terjadi Kesalahan Komunikasi Data');
 		}
 		
+	}
+	
+	public function paket(){
+		$data = PaketPembayaran::all();
+		return view('admin.paket_pembayaran',compact('data'));
+	}
+	
+	public function paket_baru(Request $request){
+		
+		$conf = new PaketPembayaran($request->all());
+		$conf->save();
+		
+		if($conf){
+			return back()->with('success','Data Berhasil Disimpan');
+		}else{
+			return back()->with('error','Terjadi Kesalahan Komunikasi Data');
+		}
+	}
+	
+	public function paket_item($id){
+		$paket = PaketPembayaran::find($id);
+		$data = ItemPembayaran::where('paket',$id)->get();
+		return view('admin.item_pembayaran',compact('paket','data'));
+	}
+	
+	public function paket_item_new(Request $request){
+		$paket = $request->paket;
+		$max = $request->total_data;
+		$i=0;
+		while($i<=$max){
+			if($request->input('kode_rek_'.$i)){
+				$data = new ItemPembayaran();
+				$data->paket = $paket;
+				$data->rekening = $request->input('kode_rek_'.$i);
+				$data->save();
+			}
+			$i++;
+		}
+		
+		if($data){
+			return back()->with('success','Data Berhasil Disimpan');
+		}else{
+			return back()->with('error','Terjadi Kesalahan Komunikasi Data');
+		}
 	}
 		
 }

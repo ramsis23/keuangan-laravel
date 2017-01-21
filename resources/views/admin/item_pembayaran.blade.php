@@ -86,7 +86,7 @@
 					?>
 					<select class="selectpicker" data-live-search="true" id="kode_rekening" name="kode_rek" required>
 						@foreach($kode_rek as $r)
-						<option value="{{ $r->id_rekening }}">{{ $r->nama_rekening }}</option>
+						<option value="{{ $r->id_rekening }}">{{ $r->id_rekening }} - {{ $r->nama_rekening }}</option>
 						@endforeach
 					</select>
 					<a href="#!" title="Tambah kode rekening" class="btn btn-warning" id="btn_add">+</a>

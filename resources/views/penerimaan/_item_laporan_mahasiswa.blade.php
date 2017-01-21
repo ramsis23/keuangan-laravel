@@ -48,7 +48,7 @@ $mhs = JurnalPenerimaan::where('nim_mhs',$nim)->first();
 		
 		@foreach($data as $r)
 			<?php
-			$nama_rek = KodeRekening::find($r->kode_rekening);
+			$nama_rek = KodeRekening::find($r->rekening);
 			$total_setoran_row = 0;
 			?>
 			<tr>
@@ -58,7 +58,7 @@ $mhs = JurnalPenerimaan::where('nim_mhs',$nim)->first();
 				@for($i = 1; $i <= 8; $i++)
 				<?php
 				$items = DB::table('penerimaan')
-								->where('kode_rekening','=',$r->kode_rekening)
+								->where('kode_rekening','=',$r->rekening)
 								->where('semester',$i)
 								->where('nim_mhs',$nim)
 								->get();
@@ -67,7 +67,7 @@ $mhs = JurnalPenerimaan::where('nim_mhs',$nim)->first();
 				?>
 				<td align="right" style="background-color:#00aa00;color:#fff;">
 					@foreach($items as $item)
-					 <?php $total_setoran_day += $item->setoran; $saldo_smt[] = array("semester" => $i,"kode_rekening" => $r->kode_rekening, "setoran" => $item->setoran);?>
+					 <?php $total_setoran_day += $item->setoran; $saldo_smt[] = array("semester" => $i,"kode_rekening" => $r->rekening, "setoran" => $item->setoran);?>
 					@endforeach
 					@if($total_setoran_day != 0){{ rupiah($total_setoran_day) }}@endif
 				</td>
@@ -75,7 +75,7 @@ $mhs = JurnalPenerimaan::where('nim_mhs',$nim)->first();
 				{{ rupiah($nama_rek->biaya -  $total_setoran_day)}}
 				<?php
 					$total_utang_day += ($nama_rek->biaya -  $total_setoran_day);
-					$jumlah_utang[] = array("semester" => $i,"kode_rekening" => $r->kode_rekening, "utang" => $total_utang_day);
+					$jumlah_utang[] = array("semester" => $i,"kode_rekening" => $r->rekening, "utang" => $total_utang_day);
 				?>
 				</td>
 				<?php $total_setoran_row += $total_setoran_day; ?>

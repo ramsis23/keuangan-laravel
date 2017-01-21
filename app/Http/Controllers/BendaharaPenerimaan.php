@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Transaksi;
 use App\JurnalPenerimaan;
+use App\PaketPembayaran;
+use App\ItemPembayaran;
 use App\User;
 use Auth;
 use DB;
@@ -51,16 +53,18 @@ class BendaharaPenerimaan extends Controller
 			
 			echo $request->input('kode_rek_'.$i)." - ".$request->input('setoran_'.$i)." <br>";
 			
-			$jurnal = new Transaksi($request->all());
-			$jurnal->id = uniqueId($i);
-			$jurnal->created_by = Auth::user()->id;
-			$jurnal->save();
-			
-			$transaksi = new JurnalPenerimaan($request->all());
-			$transaksi->kode_rekening = $request->input('kode_rek_'.$i);
-			$transaksi->setoran = $request->input('setoran_'.$i);
-			$transaksi->id_transaksi = $jurnal->id;
-			$transaksi->save();
+			if($request->input('kode_rek_'.$i)){
+				$jurnal = new Transaksi($request->all());
+				$jurnal->id = uniqueId($i);
+				$jurnal->created_by = Auth::user()->id;
+				$jurnal->save();
+				
+				$transaksi = new JurnalPenerimaan($request->all());
+				$transaksi->kode_rekening = $request->input('kode_rek_'.$i);
+				$transaksi->setoran = $request->input('setoran_'.$i);
+				$transaksi->id_transaksi = $jurnal->id;
+				$transaksi->save();
+			}
 			
 			$i++;
 		}
@@ -149,11 +153,7 @@ class BendaharaPenerimaan extends Controller
 		
 		$nim = $request->nim;
 		
-		$data = DB::table('penerimaan')
-						->select('kode_rekening')
-						->where('nim_mhs',$nim)
-						->distinct()
-						->get();
+		$data = ItemPembayaran::where('paket',1)->get();
 						
 		//var_dump($data);
 							

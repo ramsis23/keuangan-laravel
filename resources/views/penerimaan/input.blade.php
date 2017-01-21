@@ -108,7 +108,7 @@ use App\ItemPembayaran;
 								?>
 								<select class="selectpicker" data-live-search="true" id="kode_rekening" name="kode_rek" required>
 									@foreach($kode_rek as $r)
-									<option value="{{ $r->rekening }}">{{ $r->rekening }} - {{ $r->dataRekening->nama_rekening }}</option>
+									<option value="{{ $r->rekening }}">{{ $r->dataRekening->nama_rekening }}</option>
 									@endforeach
 								</select>
 							</div>
@@ -127,14 +127,15 @@ use App\ItemPembayaran;
 								<table class="table table-striped">
 									<thead>
 										<tr>
-											<th>No</th>
 											<th>Kode Rekening</th>
+											<th>Nama Rekening</th>
 											<th>Jumlah Setoran</th>
+											<th>Aksi</th>
 										</tr>
 									</thead>
 									<tbody id="load_data">
 										<tr>
-											<td colspan="3"><i>Belum Ada Data</i></td>
+											<td colspan="4"><i>Belum Ada Data</i></td>
 										</tr>
 									</tbody>
 								</table>
@@ -203,12 +204,18 @@ use App\ItemPembayaran;
 				$("#load_data").empty();
 			}
 			var kode_rekening = $('select[name=kode_rek]').val();
+			var nama_rekening = $("#kode_rekening option:selected").text();
 			var setoran = $("#setoran").val();
 			
 			total_data++;
 			$("#total_data").val(total_data);
 			
-			$("#load_data").append("<tr> <td>"+total_data+". </td> <td><input type='text' name='kode_rek_"+total_data+"' value='"+kode_rekening+"'></td> <td><input type='text' name='setoran_"+total_data+"' value='"+setoran+"'></td></tr>");
+			$("#load_data").append("<tr> <td><input type='hidden' name='kode_rek_"+total_data+"' value='"+kode_rekening+"'>"+kode_rekening+"</td> <td>"+nama_rekening+"</td> <td><input type='hidden' name='setoran_"+total_data+"' value='"+setoran+"'>"+setoran+"</td><td><a href='#!' onclick='deleteRow(this)'><i class='glyphicon glyphicon-trash'></i></a></td></tr>");
 		});
+		
+		function deleteRow(btn) {
+		  var row = btn.parentNode.parentNode;
+		  row.parentNode.removeChild(row);
+		}
 	</script>
 @endsection
